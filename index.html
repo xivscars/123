@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мопс Джон — Старенький и любимый</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap');
+
+        :root {
+            --bg: #1a1410;
+            --card: #2a211c;
+            --accent: #e8a87c;
+            --text: #f5e6d3;
+            --muted: #c4a484;
+            --sad: #8b6f5c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .hero {
+            position: relative;
+            height: 70vh;
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2c1f18 0%, #1a1410 100%);
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.8s ease;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(26,20,16,0.65), rgba(26,20,16,0.8));
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 8vw, 4.5rem);
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--muted);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: rgba(232, 168, 124, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .story {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(232, 168, 124, 0.1);
+        }
+
+        .story h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .story p {
+            font-size: 1.15rem;
+            color: var(--text);
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+        }
+
+        .story p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .gallery-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .photo-card {
+            background: var(--card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(232, 168, 124, 0.08);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            background: #333;
+        }
+
+        .photo-card .caption {
+            padding: 1rem;
+            font-size: 0.95rem;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted);
+            font-size: 1.2rem;
+        }
+
+        .sad-note {
+            background: linear-gradient(135deg, rgba(139, 111, 92, 0.2), rgba(42, 33, 28, 0.8));
+            border-left: 4px solid var(--sad);
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(232, 168, 124, 0.1);
+            margin-top: 2rem;
+        }
+
+        .refresh-btn {
+            display: block;
+            margin: 2rem auto 0;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .refresh-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        @media (max-width: 600px) {
+            .story {
+                padding: 1.5rem;
+            }
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Мопс Джон</h1>
+            <p class="subtitle">Самый добрый, самый старенький, самый любимый</p>
+            <div class="age-badge">14 лет • Старый друг</div>
+        </div>
+    </section>
+
+    <div class="container">
+        <article class="story">
+            <h2>🐕 История Джона</h2>
+            <p>
+                Джон — мопс. Не просто мопс. Он — <span class="highlight">14-летний ветеран</span> морщинистых щёк и громкого сопения. 
+                Когда-то он бегал как сумасшедший, гонялся за мячиком и требовал внимания каждые пять минут. 
+                Теперь его лапки уже не такие быстрые, а глаза чуть помутнели от возраста.
+            </p>
+            <p>
+                Каждое утро он с трудом поднимается с лежанки. Слышно, как хрустят суставы. 
+                Он всё ещё машет хвостиком, когда видит хозяина, но уже не прыгает — просто смотрит своими большими, грустными глазами и тихо сопит.
+            </p>
+            <div class="sad-note">
+                Жалко его до слёз. Этот маленький старый мопс прожил целую жизнь рядом с людьми. 
+                Он видел, как менялся мир вокруг, а сам просто хотел любви, вкусняшек и тёплого места у ног. 
+                Теперь он заслуживает только покоя, мягкой лежанки и бесконечных поглаживаний.
+            </div>
+            <p>
+                Джон больше не бегает. Он медленно ходит по квартире, иногда останавливается и просто смотрит в окно. 
+                Как будто вспоминает что-то важное. Или просто устал. 
+                Но когда его гладишь за ушком — он всё ещё закрывает глаза от удовольствия и издаёт тот самый характерный мопсиный звук «хрю-хрю».
+            </p>
+            <p>
+                Он старенький. Очень. И от этого сердце сжимается. 
+                Хочется обнять его покрепче и сказать: «Ты самый лучший мопс на свете. Мы тебя очень любим, Джон».
+            </p>
+        </article>
+
+        <section class="gallery-section">
+            <h2>📸 Случайные мопсы (как наш Джон)</h2>
+            <div class="gallery" id="gallery">
+                <div class="loading">Загружаем мопсиков...</div>
+            </div>
+            <button class="refresh-btn" onclick="loadPugs()">Показать других мопсов</button>
+        </section>
+    </div>
+
+    <footer>
+        Сделано с любовью к старым мопсам • Джон всё ещё с нами и очень любим ❤️
+    </footer>
+
+    <script>
+        async function loadPugs() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '<div class="loading">Загружаем мопсиков...</div>';
+
+            const captions = [
+                "Такой же морщинистый, как наш Джон",
+                "Глаза полные мудрости и усталости",
+                "Просто хочет, чтобы его обняли",
+                "Старенький, но всё ещё красавчик",
+                "Сопит и любит жизнь",
+                "Заслужил все вкусняшки мира"
+            ];
+
+            try {
+                const promises = Array.from({ length: 6 }, () =>
+                    fetch('https://dog.ceo/api/breed/pug/images/random')
+                        .then(r => r.json())
+                        .then(data => data.message)
+                );
+
+                const urls = await Promise.all(promises);
+
+                gallery.innerHTML = '';
+                urls.forEach((url, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'photo-card';
+                    card.innerHTML = `
+                        <img src="${url}" alt="Мопс" loading="lazy">
+                        <div class="caption">${captions[i % captions.length]}</div>
+                    `;
+                    gallery.appendChild(card);
+                });
+
+                // Set a random pug as hero background
+                if (urls[0]) {
+                    const hero = document.getElementById('hero');
+                    hero.style.backgroundImage = `url('${urls[0]}')`;
+                }
+            } catch (err) {
+                gallery.innerHTML = '<div class="loading">Не удалось загрузить фото. Попробуй обновить страницу 😔</div>';
+            }
+        }
+
+        // Load on start
+        loadPugs();
+    </script>
+</body>
+</html>
